@@ -13,6 +13,10 @@ export interface IDepartmentsService {
   getList(query: IDepartmentsListQueryParams): Promise<IDepartmentListResponse>;
   getById(id: number): Promise<IDepartmentGetByIdResponse>;
   create(payload: IDepartmentCreatePayload): Promise<IDepartmentCreateResponse>;
+  update(
+    id: number,
+    payload: IDepartmentUpdatePayload
+  ): Promise<IDepartmentUpdateResponse>;
 }
 
 export class DepartmentsService

@@ -7,7 +7,7 @@ import { createDBPool } from "./db";
 import { Pool } from "mysql2/promise";
 import dotenv from "dotenv";
 import { departmentsRouter } from "./routers/departmentsRouter";
-import { managersRouter } from "./routers/managerRouter";
+import { managersRouter } from "./routers/managersRouter";
 
 dotenv.config();
 

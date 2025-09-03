@@ -11,11 +11,5 @@ export const managersRouter = (pool: Pool, logger: Logger) => {
   // list all managers
   router.get("/", validate({ query: getListSchema }), getList(pool, logger));
 
-  //   router.get("/:id", getById(pool, logger));
-
-  //   router.post("/", validate({ body: createSchema }), create(pool, logger));
-
-  //   router.put("/:id", validate({ body: updateSchema }), update(pool, logger));
-
   return router;
 };
