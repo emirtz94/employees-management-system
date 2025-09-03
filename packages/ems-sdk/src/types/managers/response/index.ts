@@ -12,3 +12,5 @@ export interface IManagersListResponse {
     "emp_no" | "first_name" | "last_name" | "dept_name"
   >[];
 }
+
+export type IPromoteToManagerResponse = Pick<IManagerModel, 'emp_no' | 'dept_no' | 'from_date'>

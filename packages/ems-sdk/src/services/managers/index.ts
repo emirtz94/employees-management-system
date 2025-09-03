@@ -1,5 +1,9 @@
-import { IManagersListResponse } from "../../types/managers";
-import { IManagersListQueryParams } from "../../types/managers/request";
+import {
+  IManagersListResponse,
+  IPromoteToManagerPayload,
+  IManagersListQueryParams,
+  IPromoteToManagerResponse,
+} from "../../types/managers";
 import { RestService } from "../rest";
 
 export interface IManagersService {
@@ -25,6 +29,17 @@ export class ManagersService extends RestService implements IManagersService {
 
     const { data } = await this.axios.get<IManagersListResponse>(
       `${this.resource}?${params.toString()}`
+    );
+
+    return data;
+  }
+
+  public async promoteEmployeeToManager(
+    payload: IPromoteToManagerPayload
+  ): Promise<IPromoteToManagerResponse> {
+    const { data } = await this.axios.post<IPromoteToManagerResponse>(
+      `${this.resource}`,
+      payload
     );
 
     return data;
