@@ -16,14 +16,14 @@ export const getList =
         FROM employees e
         INNER JOIN dept_manager dm ON e.emp_no = dm.emp_no
         INNER JOIN departments d ON dm.dept_no = d.dept_no
-        WHERE dm.to_date IS NULL OR dm.to_date > CURDATE();
+        WHERE dm.to_date IS NULL OR dm.to_date > CURDATE()
         `
       );
 
       const total = countRows[0].total as number;
 
       const [rows] = await pool.query<RowDataPacket[]>(
-        `SELECT e.emp_no, e.first_name, e.last_name, d.dept_name FROM employees
+        `SELECT e.emp_no, e.first_name, e.last_name, d.dept_name FROM employees e
     INNER JOIN dept_manager dm ON e.emp_no = dm.emp_no
     INNER JOIN departments d ON dm.dept_no = d.dept_no
     WHERE dm.to_date IS NULL OR dm.to_date > CURDATE()
@@ -32,10 +32,12 @@ export const getList =
       );
 
       return res.status(StatusCodes.OK).json({
-        pageNumber: pageNumberSql,
-        pageSize: pageSizeSql,
-        total,
-        totalPages: Math.ceil(total / pageSizeSql),
+        meta: {
+          pageNumber: pageNumberSql,
+          pageSize: pageSizeSql,
+          total,
+          totalPages: Math.ceil(total / pageSizeSql),
+        },
         data: rows,
       });
     } catch (error) {

@@ -7,10 +7,7 @@ export const getList =
   (pool: Pool, logger: Logger) => async (req: Request, res: Response) => {
     const { pageSize, pageNumber, orderBy, sort } = req.query;
     try {
-      const allowedOrderColumns = [
-        "dept_no",
-        "dept_name",
-      ];
+      const allowedOrderColumns = ["dept_no", "dept_name"];
 
       const pageSizeSql = Number(pageSize);
       const pageNumberSql = Number(pageNumber);
@@ -34,10 +31,12 @@ export const getList =
         [pageSizeSql, offset]
       );
       return res.status(StatusCodes.OK).json({
-        pageNumber: pageNumberSql,
-        pageSize: pageSizeSql,
-        total,
-        totalPages: Math.ceil(total / pageSizeSql),
+        meta: {
+          pageNumber: pageNumberSql,
+          pageSize: pageSizeSql,
+          total,
+          totalPages: Math.ceil(total / pageSizeSql),
+        },
         data: rows,
       });
     } catch (error) {

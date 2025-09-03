@@ -37,10 +37,12 @@ export const getList =
         [pageSizeSql, offset]
       );
       return res.status(StatusCodes.OK).json({
-        pageNumber: pageNumberSql,
-        pageSize: pageSizeSql,
-        total,
-        totalPages: Math.ceil(total / pageSizeSql),
+        meta: {
+          pageNumber: pageNumberSql,
+          pageSize: pageSizeSql,
+          total,
+          totalPages: Math.ceil(total / pageSizeSql),
+        },
         data: rows,
       });
     } catch (error) {

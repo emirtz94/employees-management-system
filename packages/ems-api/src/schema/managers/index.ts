@@ -7,3 +7,13 @@ export const getListSchema = {
   required: ["pageNumber", "pageSize"],
   additionalProperties: false,
 };
+
+export const createSchema = {
+  type: "object",
+  properties: {
+    emp_no: { type: "integer" },
+    dept_no: { type: "integer" },
+  },
+  required: ["emp_no", "dept_no"],
+  additionalProperties: false,
+};

@@ -1,15 +1,22 @@
 import { Router } from "express";
 import { Pool } from "mysql2/promise";
 import { Logger } from "pino";
-import { getList } from "../handlers/managers";
+import { createSchema, getListSchema } from "../schema/managers";
 import { validate } from "../midleware/validate";
-import { getListSchema } from "../schema/managers";
+import { getList, promoteManager } from "../handlers/managers";
 
 export const managersRouter = (pool: Pool, logger: Logger) => {
   const router = Router();
 
   // list all managers
   router.get("/", validate({ query: getListSchema }), getList(pool, logger));
+
+  // promote emp to manager
+  router.post(
+    "/",
+    validate({ body: createSchema }),
+    promoteManager(pool, logger)
+  );
 
   return router;
 };
