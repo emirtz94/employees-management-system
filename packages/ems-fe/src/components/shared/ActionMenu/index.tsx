@@ -1,11 +1,11 @@
-import { FC } from "react"
+import { FC, memo } from "react"
 import { Link } from "react-router-dom"
 
 export interface IActionMenuProperties {
     handleOnEdit: () => void
     handleOnDelete: () => void
 }
-export const ActionMenu: FC<IActionMenuProperties> = ({ handleOnEdit, handleOnDelete }) => {
+export const ActionMenu: FC<IActionMenuProperties> = memo(({ handleOnEdit, handleOnDelete }) => {
     return (
         <ul className="dropdown-menu dropdown-menu-end">
             <li>
@@ -21,4 +21,4 @@ export const ActionMenu: FC<IActionMenuProperties> = ({ handleOnEdit, handleOnDe
         </ul>
     )
 
-}
+})
