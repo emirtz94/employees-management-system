@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './styles.css';
 
 import { createRoot } from 'react-dom/client';
@@ -8,6 +9,7 @@ import { App } from "./components/App";
 import { Employees } from "./components/Employees";
 import { Departments } from "./components/Departments";
 import { Dashboard } from "./components/Dashboard";
+import { EmployeeDetail } from "./components/EmployeeDetail";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, Component: Dashboard }, // default route for /
             { path: "employees", Component: Employees },
+            { path: "employees/:id", Component: EmployeeDetail }, // new route
             { path: "departments", Component: Departments },
         ],
     },
