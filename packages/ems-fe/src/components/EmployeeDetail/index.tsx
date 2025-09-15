@@ -1,22 +1,30 @@
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from "react";
 import { EmployeeForm } from "../EmployeeForm";
 import { useParams } from "react-router-dom";
+import { emsSDK } from "../../utils";
+import { IEmployeeGetByIdResponse } from "ems-sdk";
+
+const defaultEmployeePayload = {
+    emp_no: 0,
+    first_name: "",
+    last_name: "",
+    gender: "",
+    birth_date: "",
+    hire_date: "",
+} as unknown as IEmployeeGetByIdResponse;
 
 export const EmployeeDetail: FC = () => {
-    const [employee, setEmployee] = useState({
-        emp_no: 1001,
-        first_name: "John",
-        last_name: "Doe",
-        gender: "M",
-        birth_date: "1985-04-12",
-        hire_date: "2010-06-01",
-    });
+    const [employee, setEmployee] = useState<IEmployeeGetByIdResponse>(defaultEmployeePayload);
 
-    const { id } = useParams<{ id: string }>(); // <-- Get the ID from URL
-
+    const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
-        // TODO load data using SDK
+        const fetchEmployee = async (): Promise<IEmployeeGetByIdResponse> => {
+            const response = await emsSDK.employees.getById(parseInt(id as string))
+            return response
+        }
+
+        fetchEmployee().then(response => setEmployee(response))
     }, [id])
 
     const handleFormSubmit = useCallback(

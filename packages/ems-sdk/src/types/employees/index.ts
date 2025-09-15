@@ -2,12 +2,14 @@ import { IEmployeeCreatePayload, IEmployeeListQueryParams, IEmployeeUpdatePayloa
 import {
   IEmployeeCreateResponse,
   IEmployeeGetByIdResponse,
+  IEmployeeList,
   IEmployeeListResponse,
 } from "./response";
 
 export {
   IEmployeeListQueryParams,
   IEmployeeListResponse,
+  IEmployeeList,
   IEmployeeGetByIdResponse,
   IEmployeeCreatePayload,
   IEmployeeCreateResponse,

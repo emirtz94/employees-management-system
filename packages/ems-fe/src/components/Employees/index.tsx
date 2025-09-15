@@ -1,27 +1,23 @@
+import { useEffect, useState } from "react";
 import { ActionMenu } from "../shared/ActionMenu";
 import { useNavigate } from "react-router-dom";
+import { emsSDK } from "../../utils";
+import { IEmployeeListResponse, IEmployeeList } from "ems-sdk";
+
 
 export const Employees = () => {
+    const [employees, setEmployees] = useState<IEmployeeList[]>([]);
     const navigate = useNavigate();
 
-    const employeesData = [
-        {
-            emp_no: 1001,
-            first_name: "John",
-            last_name: "Doe",
-            gender: "M",
-            birth_date: "1985-04-12",
-            hire_date: "2010-06-01",
-        },
-        {
-            emp_no: 1002,
-            first_name: "Jane",
-            last_name: "Smith",
-            gender: "F",
-            birth_date: "1990-08-22",
-            hire_date: "2015-03-15",
-        },
-    ];
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            const response: IEmployeeListResponse = await emsSDK.employees.getList({pageNumber: 1, pageSize: 100})
+            
+            return response.data;
+        }
+
+        fetchEmployees().then(emp => setEmployees(emp));
+    })
 
     const handleOnEditBtnClick = (emp_no: number) => {
         navigate(`/employees/${emp_no}`)
@@ -46,7 +42,7 @@ export const Employees = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {employeesData.map((emp) => (
+                    {employees.map((emp) => (
                         <tr key={emp.emp_no}>
                             <td>{emp.first_name}</td>
                             <td>{emp.last_name}</td>

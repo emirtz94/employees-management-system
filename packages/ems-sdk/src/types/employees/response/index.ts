@@ -1,5 +1,10 @@
 import { IEmployeesModel } from "../model";
 
+export type IEmployeeList = Pick<
+  IEmployeesModel,
+  "emp_no" | "first_name" | "last_name" | "gender" | "birth_date" | "hire_date"
+>;
+
 export type IEmployeeListResponse = {
   meta: {
     pageNumber: number;
@@ -7,15 +12,7 @@ export type IEmployeeListResponse = {
     total: number;
     totalPages: number;
   };
-  data: Pick<
-    IEmployeesModel,
-    | "emp_no"
-    | "first_name"
-    | "last_name"
-    | "gender"
-    | "birth_date"
-    | "hire_date"
-  >[];
+  data: IEmployeeList[];
 };
 
 export type IEmployeeGetByIdResponse = Pick<

@@ -1,5 +1,4 @@
 import { FC, memo } from "react"
-import { Link } from "react-router-dom"
 
 export interface IActionMenuProperties {
     handleOnEdit: () => void
