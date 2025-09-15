@@ -30,7 +30,7 @@ const createExpressApp = () => {
     cors({
       origin: (origin, callback) => {
         const allowedOrigins =
-          process.env.LIST_OF_ALLOWED_ORIGINS?.split(",") || [];
+          JSON.parse(process.env.LIST_OF_ALLOWED_ORIGINS as string)
 
         if (!origin) {
           // i.e Postman request

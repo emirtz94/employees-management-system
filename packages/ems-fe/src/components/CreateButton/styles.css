@@ -1,0 +1,11 @@
+.create-button-wrapper.create-button-wrapper__position {
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 1050;
+}
+
+.create-button-wrapper .create-button-wrapper__button {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+}

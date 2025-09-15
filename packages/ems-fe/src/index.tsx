@@ -10,6 +10,7 @@ import { Employees } from "./components/Employees";
 import { Departments } from "./components/Departments";
 import { Dashboard } from "./components/Dashboard";
 import { EmployeeDetail } from "./components/EmployeeDetail";
+import { EmployeeCreate } from "./components/EmployeeCreate";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
         children: [
             { index: true, Component: Dashboard }, // default route for /
             { path: "employees", Component: Employees },
-            { path: "employees/:id", Component: EmployeeDetail }, // new route
+            { path: "employees/create", Component: EmployeeCreate },
+            { path: "employees/:id", Component: EmployeeDetail },
             { path: "departments", Component: Departments },
         ],
     },
