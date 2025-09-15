@@ -1,15 +1,7 @@
 {
   "name": "employees-management-system",
-  "description": "",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/emirtz94/employees-management-system.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://github.com/emirtz94/employees-management-system#readme",
   "workspaces": [
     "packages/*"
   ],

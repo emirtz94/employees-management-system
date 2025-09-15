@@ -1,29 +1,13 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "module": "commonjs",
-    "moduleResolution": "Node",
+    "outDir": "dist",
     "jsx": "react-jsx",
-
-    /* Strictness */
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-
-    /* Paths and Imports */
-    "baseUrl": "./src",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-
-    /* Output */
-    "outDir": "./dist",
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "noEmit": false
+    "baseUrl": "src"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../ems-sdk" }
+  ]
 }
