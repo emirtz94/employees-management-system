@@ -10,13 +10,13 @@ export const Employees = () => {
     const [employees, setEmployees] = useState<IEmployeeList[]>([]);
     const navigate = useNavigate();
 
+    const fetchEmployees = async () => {
+        const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber: 1, pageSize: 100 })
+
+        return response.data;
+    }
+
     useEffect(() => {
-        const fetchEmployees = async () => {
-            const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber: 1, pageSize: 100 })
-
-            return response.data;
-        }
-
         fetchEmployees().then(emp => setEmployees(emp));
     }, [])
 
@@ -28,8 +28,14 @@ export const Employees = () => {
         navigate(`/employees/${emp_no}`)
     }
 
-    const deleteEmployee = () => {
-
+    const deleteEmployee = async (id: number) => {
+        try {
+            await emsSDK.employees.delete(id);
+            
+            fetchEmployees().then(emp => setEmployees(emp));
+        } catch (error) {
+            console.log('Failed to delete employee', { error });
+        }
     }
 
     return (
@@ -75,7 +81,7 @@ export const Employees = () => {
                                         </button>
                                         <ActionMenu
                                             handleOnEdit={() => editEmployee(emp.emp_no)}
-                                            handleOnDelete={deleteEmployee} />
+                                            handleOnDelete={() => deleteEmployee(emp.emp_no)} />
                                     </div>
                                 </td>
                             </tr>
