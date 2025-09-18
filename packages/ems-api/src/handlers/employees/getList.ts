@@ -12,6 +12,7 @@ export const getList =
         "first_name",
         "last_name",
         "hire_date",
+        "birth_date",
         "gender",
       ];
 

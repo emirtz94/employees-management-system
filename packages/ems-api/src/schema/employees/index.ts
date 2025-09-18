@@ -6,7 +6,7 @@ export const getListSchema = {
     sort: { type: "string", enum: ["ASC", "DESC"], default: "DESC" },
     orderBy: {
       type: "string",
-      enum: ["emp_no", "first_name", "last_name", "hire_date", "gender"],
+      enum: ["emp_no", "first_name", "last_name", "hire_date", "gender", "birth_date"],
       default: "emp_no",
     },
   },

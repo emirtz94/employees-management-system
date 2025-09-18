@@ -3,7 +3,7 @@ import { IEmployeesModel } from "../model";
 export interface IEmployeeListQueryParams {
   pageNumber: number;
   pageSize: number;
-  orderBy?: "emp_no" | "first_name" | "last_name" | "hire_date" | "gender";
+  orderBy?: "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date";
   sort?: "ASC" | "DESC";
 }
 
