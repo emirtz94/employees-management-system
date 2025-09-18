@@ -3,8 +3,8 @@ import { ActionMenu } from "../shared/ActionMenu";
 import { useNavigate } from "react-router-dom";
 import { emsSDK } from "../../utils";
 import { IEmployeeListResponse, IEmployeeList } from "ems-sdk";
-import { CreateButton } from "../CreateButton";
-import { PageNavigation } from "../PageNavigation";
+import { CreateButton } from "../shared/CreateButton";
+import { PageNavigation } from "../shared/PageNavigation";
 
 type SortOrder = "ASC" | "DESC" | undefined;
 type OrderBy = "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date" | undefined;
