@@ -6,6 +6,7 @@ import {
 import {
   IDepartmentCreateResponse,
   IDepartmentGetByIdResponse,
+  IDepartmentList,
   IDepartmentListResponse,
   IDepartmentUpdateResponse,
 } from "./response";
@@ -13,6 +14,7 @@ import {
 export {
   IDepartmentsListQueryParams,
   IDepartmentListResponse,
+  IDepartmentList,
   IDepartmentGetByIdResponse,
   IDepartmentCreatePayload,
   IDepartmentCreateResponse,

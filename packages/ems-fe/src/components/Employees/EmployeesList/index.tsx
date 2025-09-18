@@ -33,7 +33,7 @@ export const EmployeesList = () => {
 
     useEffect(() => {
         fetchEmployees({ pageNumber, pageSize, orderBy: sortConfig.key, sort: sortConfig.order }).then(emp => setEmployees(emp));
-    }, [pageNumber, pageSize, sortConfig])
+    }, [pageNumber, pageSize, sortConfig]);
 
     const createEmployee = () => {
         navigate(`/employees/create`)
@@ -80,7 +80,6 @@ export const EmployeesList = () => {
 
     return (
         <div className="position-relative">
-
             <div className="table-responsive shadow-sm rounded bg-white p-3">
                 <h3 className="mb-3">Employees</h3>
                 <table className="table table-hover table-striped align-middle text-center">

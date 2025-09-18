@@ -11,6 +11,8 @@ import { EmployeeDetail } from "./components/Employees/EmployeeDetail";
 import { EmployeeCreate } from "./components/Employees/EmployeeCreate";
 import { DepartmentsList } from "./components/Departments/DepartmentsList";
 import { Dashboard } from "./components/Dashboard";
+import { DepartmentsCreate } from "./components/Departments/DepartmentsCreate";
+import { DepartmentsDetail } from "./components/Departments/DepartmentsDetail";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
             { path: "employees/create", Component: EmployeeCreate },
             { path: "employees/:id", Component: EmployeeDetail },
             { path: "departments", Component: DepartmentsList },
+            { path: "departments/create", Component: DepartmentsCreate },
+            { path: "departments/:id", Component: DepartmentsDetail },
         ],
     },
 ]);

@@ -1,5 +1,7 @@
 import { IDepartmentModel } from "../model";
 
+export type IDepartmentList = Pick<IDepartmentModel, "dept_name" | "dept_no">;
+
 export type IDepartmentListResponse = {
   meta: {
     pageNumber: number;
@@ -7,7 +9,7 @@ export type IDepartmentListResponse = {
     total: number;
     totalPages: number;
   };
-  data: Pick<IDepartmentModel, "dept_name" | "dept_no">[];
+  data: IDepartmentList[];
 };
 
 export type IDepartmentGetByIdResponse = Pick<
