@@ -1,4 +1,4 @@
-import { SideNavbar } from "../shared/SideNavbar";
+import { SideNavbar } from "../SideNavbar";
 import { Outlet } from "react-router-dom";
 
 export const App = () => {

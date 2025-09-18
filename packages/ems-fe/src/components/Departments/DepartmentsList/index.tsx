@@ -1,4 +1,4 @@
-export const Departments = () => {
+export const DepartmentsList = () => {
     return (
         <>Departments</>
     )

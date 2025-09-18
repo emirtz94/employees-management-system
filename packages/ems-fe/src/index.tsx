@@ -6,11 +6,11 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import { App } from "./components/App";
-import { Employees } from "./components/Employees";
-import { Departments } from "./components/Departments";
+import { EmployeesList } from "./components/Employees/EmployeesList";
+import { EmployeeDetail } from "./components/Employees/EmployeeDetail";
+import { EmployeeCreate } from "./components/Employees/EmployeeCreate";
+import { DepartmentsList } from "./components/Departments/DepartmentsList";
 import { Dashboard } from "./components/Dashboard";
-import { EmployeeDetail } from "./components/EmployeeDetail";
-import { EmployeeCreate } from "./components/EmployeeCreate";
 
 const router = createBrowserRouter([
     {
@@ -18,10 +18,10 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
             { index: true, Component: Dashboard }, // default route for /
-            { path: "employees", Component: Employees },
+            { path: "employees", Component: EmployeesList },
             { path: "employees/create", Component: EmployeeCreate },
             { path: "employees/:id", Component: EmployeeDetail },
-            { path: "departments", Component: Departments },
+            { path: "departments", Component: DepartmentsList },
         ],
     },
 ]);

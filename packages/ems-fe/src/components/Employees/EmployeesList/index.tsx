@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { ActionMenu } from "../shared/ActionMenu";
+import { ActionMenu } from "../../shared/ActionMenu";
 import { useNavigate } from "react-router-dom";
-import { emsSDK } from "../../utils";
+import { emsSDK } from "../../../utils";
 import { IEmployeeListResponse, IEmployeeList } from "ems-sdk";
-import { CreateButton } from "../shared/CreateButton";
-import { PageNavigation } from "../shared/PageNavigation";
+import { CreateButton } from "../../shared/CreateButton";
+import { PageNavigation } from "../../shared/PageNavigation";
 
 type SortOrder = "ASC" | "DESC" | undefined;
 type OrderBy = "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date" | undefined;
 
-export const Employees = () => {
+export const EmployeesList = () => {
     const [employees, setEmployees] = useState<IEmployeeList[]>([]);
     const [pageSize, setPageSize] = useState(25);
     const [pageNumber, setPageNumber] = useState(1);
