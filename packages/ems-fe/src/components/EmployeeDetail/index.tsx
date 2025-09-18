@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from "react";
 import { EmployeeForm } from "../EmployeeForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { emsSDK } from "../../utils";
 import { IEmployeeGetByIdResponse } from "ems-sdk";
 
@@ -15,6 +15,7 @@ const defaultEmployeePayload = {
 
 export const EmployeeDetail: FC = () => {
     const [employee, setEmployee] = useState<IEmployeeGetByIdResponse>(defaultEmployeePayload);
+    const navigate = useNavigate();
 
     const { id } = useParams<{ id: string }>();
 
@@ -28,10 +29,16 @@ export const EmployeeDetail: FC = () => {
     }, [id])
 
     const handleFormSubmit = useCallback(
-        (e: FormEvent) => {
+        async (e: FormEvent) => {
             e.preventDefault();
-            console.log("Saving employee:", employee, { e });
-            // TODO: call API for saving employee
+            const { emp_no, ...payload } = employee;
+            try {
+                await emsSDK.employees.update(emp_no, payload);
+
+                navigate(`/employees`);
+            } catch (error) {
+                console.error("Error saving employee:", error);
+            }
         },
         [employee]
     );
@@ -39,6 +46,7 @@ export const EmployeeDetail: FC = () => {
     const handleEmployeeChange = useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
             const { id, value } = e.target;
+            console.log({ id, value })
             setEmployee((prev) => ({ ...prev, [id]: value }));
         },
         []

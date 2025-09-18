@@ -24,8 +24,6 @@ export const EmployeeCreate: FC<IEmployeeCreateProperties> = ({ }) => {
         async (e: FormEvent) => {
             e.preventDefault();
             try {
-                console.log("Saving employee:", employee, { e });
-
                 await emsSDK.employees.create(employee);
 
                 navigate(`/employees`);
@@ -35,8 +33,6 @@ export const EmployeeCreate: FC<IEmployeeCreateProperties> = ({ }) => {
         },
         [employee, navigate]
     );
-
-
 
     const handleEmployeeChange = useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
