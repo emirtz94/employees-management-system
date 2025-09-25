@@ -6,7 +6,8 @@ import { Logger } from "pino";
 export const create =
   (pool: Pool, logger: Logger) => async (req: Request, res: Response) => {
     try {
-      const { first_name, last_name, gender, hire_date, birth_date } = req.body;
+      const { first_name, last_name, gender, hire_date, birth_date, dept_no } =
+        req.body;
 
       const [result] = await pool.query<ResultSetHeader>(
         `INSERT INTO employees (first_name, last_name, gender, hire_date, birth_date)
@@ -14,15 +15,24 @@ export const create =
         [first_name, last_name, gender, hire_date, birth_date]
       );
 
-      const insertId = result.insertId;
+      const emp_no = result.insertId;
+
+      if (dept_no) {
+        await pool.query<ResultSetHeader>(
+          `INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date)
+   VALUES (?, ?, ?, NULL)`,
+          [emp_no, dept_no, hire_date] // from_date = hire_date, to_date = NULL = active
+        );
+      }
 
       res.status(StatusCodes.CREATED).json({
-        emp_no: insertId,
+        emp_no,
         first_name,
         last_name,
         gender,
         hire_date,
         birth_date,
+        ...(dept_no ? { dept_no } : {}),
       });
     } catch (error) {
       const message = "Failed to create employee";

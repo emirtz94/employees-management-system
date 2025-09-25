@@ -11,10 +11,10 @@ interface IEmployeeCreateProperties {
 const defaultEmployeePayload = {
     first_name: "",
     last_name: "",
-    gender: "",
+    gender: "M",
     birth_date: "",
     hire_date: "",
-} as unknown as IEmployeeCreatePayload;
+} as IEmployeeCreatePayload;
 
 export const EmployeeCreate: FC<IEmployeeCreateProperties> = ({ }) => {
     const [employee, setEmployee] = useState<IEmployeeCreatePayload>(defaultEmployeePayload);

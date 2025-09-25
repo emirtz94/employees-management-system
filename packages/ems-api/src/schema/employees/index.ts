@@ -6,7 +6,14 @@ export const getListSchema = {
     sort: { type: "string", enum: ["ASC", "DESC"], default: "DESC" },
     orderBy: {
       type: "string",
-      enum: ["emp_no", "first_name", "last_name", "hire_date", "gender", "birth_date"],
+      enum: [
+        "emp_no",
+        "first_name",
+        "last_name",
+        "hire_date",
+        "gender",
+        "birth_date",
+      ],
       default: "emp_no",
     },
   },
@@ -22,6 +29,7 @@ export const createSchema = {
     gender: { type: "string", enum: ["M", "F"] },
     hire_date: { type: "string", format: "date" },
     birth_date: { type: "string", format: "date" },
+    dept_no: { type: "number" },
   },
   required: ["first_name", "last_name", "gender", "hire_date", "birth_date"],
   additionalProperties: false,

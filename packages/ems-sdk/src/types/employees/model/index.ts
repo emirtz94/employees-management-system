@@ -5,4 +5,5 @@ export interface IEmployeesModel {
   gender: "M" | "F";
   birth_date: string;
   hire_date: string;
+  dept_no: string;
 }
