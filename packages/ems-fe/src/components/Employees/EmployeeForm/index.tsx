@@ -1,8 +1,9 @@
+import { IEmployeeCreatePayload, IEmployeeUpdatePayload } from "ems-sdk";
 import { ChangeEvent, FC, FormEvent, memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 export interface IEmployeeFormProperties {
-    employee: any; // TODO import type from SDK and use it in here 
+    employee: IEmployeeCreatePayload | IEmployeeUpdatePayload;
     handleEmployeeChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     handleFormSubmit: (e: FormEvent) => void;
 };

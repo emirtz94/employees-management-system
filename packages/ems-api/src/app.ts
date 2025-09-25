@@ -13,10 +13,6 @@ import { managersRouter } from "./routers/managersRouter";
 dotenv.config();
 
 const createExpressApp = () => {
-  console.log({
-    VERSION: process.env.VERSION,
-    PORT: process.env.PORT,
-  });
   const app: Express = express();
   const pool: Pool = createDBPool();
 

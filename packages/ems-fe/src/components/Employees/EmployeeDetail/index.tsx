@@ -26,7 +26,7 @@ export const EmployeeDetail: FC = () => {
         }
 
         fetchEmployee().then(response => setEmployee(response))
-    }, [id])
+    }, [id]);
 
     const handleFormSubmit = useCallback(
         async (e: FormEvent) => {
@@ -46,7 +46,6 @@ export const EmployeeDetail: FC = () => {
     const handleEmployeeChange = useCallback(
         (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
             const { id, value } = e.target;
-            console.log({ id, value })
             setEmployee((prev) => ({ ...prev, [id]: value }));
         },
         []
@@ -56,7 +55,10 @@ export const EmployeeDetail: FC = () => {
         <div className="container py-4">
             <div className="shadow-sm rounded bg-white p-4">
                 <h3 className="mb-4">Edit Employee</h3>
-                <EmployeeForm employee={employee} handleEmployeeChange={handleEmployeeChange} handleFormSubmit={handleFormSubmit} />
+                <EmployeeForm 
+                    employee={employee} 
+                    handleEmployeeChange={handleEmployeeChange}
+                    handleFormSubmit={handleFormSubmit} />
             </div>
         </div>
     );
