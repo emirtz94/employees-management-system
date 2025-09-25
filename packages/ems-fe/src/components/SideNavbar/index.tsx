@@ -35,6 +35,16 @@ export const SideNavbar = () => {
             Departments
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink
+            to="/managers"
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active text-white" : "text-white"}`
+            }
+          >
+            Managers
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

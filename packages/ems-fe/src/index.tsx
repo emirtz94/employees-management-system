@@ -13,6 +13,7 @@ import { DepartmentsList } from "./components/Departments/DepartmentsList";
 import { Dashboard } from "./components/Dashboard";
 import { DepartmentsCreate } from "./components/Departments/DepartmentsCreate";
 import { DepartmentsDetail } from "./components/Departments/DepartmentsDetail";
+import { ManagersList } from "./components/Managers/ManagersList";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,8 @@ const router = createBrowserRouter([
             { path: "departments", Component: DepartmentsList },
             { path: "departments/create", Component: DepartmentsCreate },
             { path: "departments/:id", Component: DepartmentsDetail },
+            { path: "managers", Component: ManagersList },
+
         ],
     },
 ]);
