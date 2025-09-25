@@ -17,6 +17,7 @@ export interface IDepartmentsService {
     id: number,
     payload: IDepartmentUpdatePayload
   ): Promise<IDepartmentUpdateResponse>;
+  delete(id: number): Promise<{ message: string }>;
 }
 
 export class DepartmentsService
@@ -73,6 +74,13 @@ export class DepartmentsService
     const { data } = await this.axios.put<IDepartmentUpdateResponse>(
       `${this.resource}/${id}`,
       payload
+    );
+    return data;
+  }
+
+  public async delete(id: number): Promise<{ message: string }> {
+    const { data } = await this.axios.delete<{ message: string }>(
+      `${this.resource}/${id}`
     );
     return data;
   }

@@ -17,7 +17,7 @@ export interface IEmployeesService {
     id: number,
     payload: IEmployeeUpdatePayload
   ): Promise<IEmployeeUpdateResponse>;
-  delete(id: number): Promise<{}>
+  delete(id: number): Promise<{ message: string }>;
 }
 
 export class EmployeesService extends RestService implements IEmployeesService {
@@ -74,8 +74,8 @@ export class EmployeesService extends RestService implements IEmployeesService {
     return data;
   }
 
-  public async delete(id: number): Promise<{}> {
-    const { data } = await this.axios.delete<{}>(`${this.resource}/${id}`);
+  public async delete(id: number): Promise<{ message: string }> {
+    const { data } = await this.axios.delete<{ message: string }>(`${this.resource}/${id}`);
     return data;
   }
 }

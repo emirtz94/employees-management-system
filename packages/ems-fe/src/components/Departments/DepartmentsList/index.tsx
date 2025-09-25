@@ -43,9 +43,9 @@ export const DepartmentsList = () => {
         navigate(`/departments/${dept_no}`)
     }
 
-    const deleteEmployee = async (id: number) => {
+    const deleteDepartment = async (id: number) => {
         try {
-            await emsSDK.employees.delete(id);
+            await emsSDK.departments.delete(id);
 
             fetchDepartments({ pageNumber, pageSize }).then(emp => setDepartments(emp));
         } catch (error) {
@@ -120,7 +120,7 @@ export const DepartmentsList = () => {
                                         </button>
                                         <ActionMenu
                                             handleOnEdit={() => editDepartment(d.dept_no)}
-                                            handleOnDelete={() => deleteEmployee(d.dept_no)} />
+                                            handleOnDelete={() => deleteDepartment(d.dept_no)} />
                                     </div>
                                 </td>
                             </tr>

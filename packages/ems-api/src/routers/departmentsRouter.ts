@@ -2,7 +2,7 @@ import { Router } from "express";
 import { Pool } from "mysql2/promise";
 import { Logger } from "pino";
 import { validate } from "../midleware/validate";
-import { create, getById, getList, update } from "../handlers/departments";
+import { create, getById, getList, update, deleteDepartment } from "../handlers/departments";
 import { createSchema, getListSchema, updateSchema } from "../schema/departments";
 
 export const departmentsRouter = (pool: Pool, logger: Logger) => {
@@ -27,5 +27,7 @@ export const departmentsRouter = (pool: Pool, logger: Logger) => {
     update(pool, logger)
   );
 
+  router.delete("/:id", deleteDepartment(pool, logger));
+  
   return router;
 };

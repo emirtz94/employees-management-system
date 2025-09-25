@@ -1,5 +1,6 @@
 import { IDepartmentCreatePayload, IDepartmentUpdatePayload } from "ems-sdk";
 import { ChangeEvent, FC, FormEvent } from "react"
+import { useNavigate } from "react-router-dom";
 
 interface IDepartmentFormProperties {
     department: IDepartmentCreatePayload | IDepartmentUpdatePayload;
@@ -8,6 +9,8 @@ interface IDepartmentFormProperties {
 }
 
 export const DepartmentForm: FC<IDepartmentFormProperties> = ({ department, handleDepartmentChange, handleFormSubmit }) => {
+    const navigate = useNavigate();
+
     return (
         <form onSubmit={handleFormSubmit}>
             <div className="row">
@@ -24,7 +27,18 @@ export const DepartmentForm: FC<IDepartmentFormProperties> = ({ department, hand
                     />
                 </div>
             </div>
-
+            <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary me-2">
+                    Save
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => navigate("/departments")}
+                >
+                    Cancel
+                </button>
+            </div>
         </form>
     )
 }
