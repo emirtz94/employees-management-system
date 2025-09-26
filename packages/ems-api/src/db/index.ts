@@ -10,6 +10,7 @@ export const createDBPool = (): Pool => {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
+      dateStrings: true, // forces DATE/DATETIME to return as "YYYY-MM-DD"
     });
   } catch (error) {
     console.log({ error });

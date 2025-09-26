@@ -16,7 +16,7 @@ const defaultEmployeePayload = {
 export const EmployeeDetail: FC = () => {
     const [employee, setEmployee] = useState<IEmployeeGetByIdResponse>(defaultEmployeePayload);
     const navigate = useNavigate();
-
+    
     const { id } = useParams<{ id: string }>();
 
     useEffect(() => {

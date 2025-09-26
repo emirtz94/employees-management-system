@@ -24,6 +24,12 @@ export const EmployeeCreate: FC<IEmployeeCreateProperties> = ({ }) => {
         async (e: FormEvent) => {
             e.preventDefault();
             try {
+                
+                if (!employee.dept_no) {
+                    // don't send empty string
+                    delete employee.dept_no;
+                }
+
                 await emsSDK.employees.create(employee);
 
                 navigate(`/employees`);

@@ -33,7 +33,15 @@ export type IEmployeeCreateResponse = Required<
 > &
   Partial<Pick<IEmployeesModel, "dept_no">>;
 
-export type IEmployeeUpdateResponse = Pick<
-  IEmployeesModel,
-  "emp_no" | "first_name" | "last_name" | "gender" | "birth_date" | "hire_date"
->;
+export type IEmployeeUpdateResponse = Required<
+  Pick<
+    IEmployeesModel,
+    | "emp_no"
+    | "first_name"
+    | "last_name"
+    | "gender"
+    | "birth_date"
+    | "hire_date"
+  >
+> &
+  Partial<Pick<IEmployeesModel, "dept_no">>;

@@ -6,7 +6,7 @@ import { Logger } from "pino";
 export const update =
   (pool: Pool, logger: Logger) => async (req: Request, res: Response) => {
     try {
-      const dept_no = req.params.id;
+      const dept_no = parseInt(req.params.id);
       const { dept_name } = req.body;
 
       const [result] = await pool.query<ResultSetHeader>(
