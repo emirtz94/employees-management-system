@@ -17,7 +17,21 @@ export const getById =
         return res.status(StatusCodes.NOT_FOUND).json({});
       }
 
-      return res.status(StatusCodes.OK).json(rows[0]);
+      const [departmentRows] = await pool.query<RowDataPacket[]>(
+        "SELECT dept_no FROM dept_emp WHERE emp_no = ?",
+        [id]
+      );
+
+      let deptNo;
+
+      if (departmentRows.length) {
+        const { dept_no } = departmentRows[0];
+        deptNo = dept_no;
+      }
+
+      return res
+        .status(StatusCodes.OK)
+        .json({ ...rows[0], ...(deptNo ? { dept_no: deptNo } : {}) });
     } catch (error) {
       const message = "Failed to fetch single employee";
       logger.error({ error, id }, message);

@@ -1,7 +1,7 @@
-import { IDepartmentList, IDepartmentListResponse, IEmployeeCreatePayload, IEmployeeUpdatePayload } from "ems-sdk";
-import { ChangeEvent, FC, FormEvent, memo, useEffect, useState } from "react";
+import { IEmployeeCreatePayload, IEmployeeUpdatePayload } from "ems-sdk";
+import { ChangeEvent, FC, FormEvent, memo } from "react";
 import { useNavigate } from "react-router-dom";
-import { emsSDK } from "../../../utils";
+import { SelectDepartment } from "../../shared/SelectDepartment";
 
 export interface IEmployeeFormProperties {
     employee: IEmployeeCreatePayload | IEmployeeUpdatePayload;
@@ -10,18 +10,7 @@ export interface IEmployeeFormProperties {
 };
 
 export const EmployeeForm: FC<IEmployeeFormProperties> = memo(({ employee, handleEmployeeChange, handleFormSubmit }) => {
-    const [departments, setDepartments] = useState<IDepartmentList[]>([]);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchDepartments = async (): Promise<IDepartmentListResponse> => {
-            // TODO in case of more than 100 Departments this field will not contain all the data
-            const response = await emsSDK.departments.getList({ pageNumber: 1, pageSize: 100, sort: "ASC", orderBy: "dept_name" })
-            return response
-        }
-
-        fetchDepartments().then(response => setDepartments(response.data))
-    }, []);
 
     return (
         <form onSubmit={handleFormSubmit}>
@@ -94,24 +83,12 @@ export const EmployeeForm: FC<IEmployeeFormProperties> = memo(({ employee, handl
                 />
             </div>
 
-            <div className="mb-3">
-                <label htmlFor="dept_no" className="form-label">
-                    Assign to Department
-                </label>
-                <select
-                    className="form-select"
-                    id="dept_no"
-                    value={employee.dept_no ?? ""}
-                    onChange={handleEmployeeChange}
-                >
-                    <option value="">None</option>
-                    {departments.map((dept) => (
-                        <option key={dept.dept_no} value={dept.dept_no}>
-                            {dept.dept_name}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <SelectDepartment
+                label={"Assign to Department"}
+                dept_no={employee.dept_no ?? ""}
+                defaultSelectValueLabel={"None"}
+                classNames={["col-md-12"]}
+                handleDepartmentChange={handleEmployeeChange} />
 
             <div className="d-flex justify-content-end">
                 <button type="submit" className="btn btn-primary me-2">

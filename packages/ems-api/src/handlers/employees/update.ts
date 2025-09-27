@@ -34,7 +34,7 @@ export const update =
 
         const currentDeptNo = rows.length ? rows[0].dept_no : null;
 
-        if (currentDeptNo && dept_no !== currentDeptNo) {
+        if (dept_no !== currentDeptNo) {
           departmentId = currentDeptNo;
           // terminate current department
           await pool.query(

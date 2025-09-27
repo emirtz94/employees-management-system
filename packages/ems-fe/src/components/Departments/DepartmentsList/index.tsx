@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { ActionMenu } from "../../shared/ActionMenu";
 import { CreateButton } from "../../shared/CreateButton";
 import { PageNavigation } from "../../shared/PageNavigation";
-import { IDepartmentList, IDepartmentListResponse } from "ems-sdk";
+import { IDepartmentList } from "ems-sdk";
 import { useNavigate } from "react-router-dom";
-import { emsSDK } from "../../../utils";
+import { emsSDK, fetchDepartments } from "../../../utils";
 
 type SortOrder = "ASC" | "DESC" | undefined;
 type OrderBy = "dept_no" | "dept_name" | undefined;
@@ -19,18 +19,7 @@ export const DepartmentsList = () => {
     });
 
     const navigate = useNavigate();
-
-    const fetchDepartments = async ({ pageNumber, pageSize, orderBy, sort }: {
-        pageNumber: number,
-        pageSize: number,
-        orderBy?: "dept_no" | "dept_name",
-        sort?: "ASC" | "DESC"
-    }) => {
-        const response: IDepartmentListResponse = await emsSDK.departments.getList({ pageNumber, pageSize, orderBy, sort })
-
-        return response.data;
-    }
-
+    
     useEffect(() => {
         fetchDepartments({ pageNumber, pageSize, orderBy: sortConfig.key, sort: sortConfig.order }).then(d => setDepartments(d));
     }, [pageNumber, pageSize, sortConfig]);
