@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ActionMenu } from "../../shared/ActionMenu";
 import { useNavigate } from "react-router-dom";
 import { emsSDK } from "../../../utils";
 import { IEmployeeListResponse, IEmployeeList } from "ems-sdk";
 import { CreateButton } from "../../shared/CreateButton";
 import { PageNavigation } from "../../shared/PageNavigation";
+import { SelectDepartment } from "../../shared/SelectDepartment";
 
 type SortOrder = "ASC" | "DESC" | undefined;
 type OrderBy = "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date" | undefined;
@@ -17,23 +18,25 @@ export const EmployeesList = () => {
         key: "emp_no",
         order: "DESC",
     });
+    const [departmentFilter, setDepartmentFilter] = useState<number>();
 
     const navigate = useNavigate();
 
-    const fetchEmployees = async ({ pageNumber, pageSize, orderBy, sort }: {
-        pageNumber: number,
-        pageSize: number,
-        orderBy?: "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date",
-        sort?: "ASC" | "DESC"
+    const fetchEmployees = async ({ pageNumber, pageSize, orderBy, sort, dept_no }: {
+        pageNumber: number;
+        pageSize: number;
+        orderBy?: "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date";
+        sort?: "ASC" | "DESC";
+        dept_no?: number
     }) => {
-        const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort })
+        const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort, dept_no });
 
         return response.data;
     }
 
     useEffect(() => {
-        fetchEmployees({ pageNumber, pageSize, orderBy: sortConfig.key, sort: sortConfig.order }).then(emp => setEmployees(emp));
-    }, [pageNumber, pageSize, sortConfig]);
+        fetchEmployees({ pageNumber, pageSize, orderBy: sortConfig.key, sort: sortConfig.order, dept_no: departmentFilter }).then(emp => setEmployees(emp));
+    }, [pageNumber, pageSize, sortConfig, departmentFilter]);
 
     const createEmployee = () => {
         navigate(`/employees/create`)
@@ -78,10 +81,25 @@ export const EmployeesList = () => {
         });
     };
 
+    const handleDepartmentChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const dept_no = parseInt(e.target.value);
+        setDepartmentFilter(dept_no);
+    }
+
     return (
         <div className="position-relative">
             <div className="table-responsive shadow-sm rounded bg-white p-3">
                 <h3 className="mb-3">Employees</h3>
+
+                <div>
+                    <SelectDepartment
+                        label={"Filter by Department"}
+                        dept_no={departmentFilter ?? ""}
+                        defaultSelectValueLabel={"All"}
+                        classNames={["col-md-2"]}
+                        handleDepartmentChange={handleDepartmentChange} />
+                </div>
+
                 <table className="table table-hover table-striped align-middle text-center">
                     <thead className="table-dark">
                         <tr>

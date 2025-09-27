@@ -16,6 +16,7 @@ export const getListSchema = {
       ],
       default: "emp_no",
     },
+    dept_no: { type: "integer"}
   },
   required: ["pageNumber", "pageSize"],
   additionalProperties: false,
@@ -29,7 +30,7 @@ export const createSchema = {
     gender: { type: "string", enum: ["M", "F"] },
     hire_date: { type: "string", format: "date" },
     birth_date: { type: "string", format: "date" },
-    dept_no: { type: "number" },
+    dept_no: { type: "integer" },
   },
   required: ["first_name", "last_name", "gender", "hire_date", "birth_date"],
   additionalProperties: false,

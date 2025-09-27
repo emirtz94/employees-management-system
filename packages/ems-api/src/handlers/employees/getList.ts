@@ -5,7 +5,7 @@ import { Logger } from "pino";
 
 export const getList =
   (pool: Pool, logger: Logger) => async (req: Request, res: Response) => {
-    const { pageSize, pageNumber, orderBy, sort } = req.query;
+    const { pageSize, pageNumber, orderBy, sort, dept_no } = req.query;
     try {
       const allowedOrderColumns = [
         "emp_no",
@@ -31,12 +31,24 @@ export const getList =
 
       const total = countRows[0].total as number;
 
-      const [rows] = await pool.query<RowDataPacket[]>(
-        `SELECT * FROM employees
-   ORDER BY ${sqlOrderBy} ${sqlSort}
-   LIMIT ? OFFSET ?`,
-        [pageSizeSql, offset]
-      );
+      let query = `SELECT e.* FROM employees e`;
+
+      const params: any[] = [];
+
+      if (dept_no) {
+        query += `
+          JOIN dept_emp de ON e.emp_no = de.emp_no
+          WHERE de.dept_no = ? AND de.to_date IS NULL
+        `;
+        params.push(dept_no);
+      }
+
+      query += ` ORDER BY ${sqlOrderBy} ${sqlSort} LIMIT ? OFFSET ?`;
+
+      params.push(pageSizeSql, offset);
+
+      const [rows] = await pool.query<RowDataPacket[]>(query, params);
+
       return res.status(StatusCodes.OK).json({
         meta: {
           pageNumber: pageNumberSql,
