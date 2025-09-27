@@ -12,6 +12,7 @@ export interface IEmployeeListQueryParams {
     | "birth_date";
   sort?: "ASC" | "DESC";
   dept_no?: number;
+  search?: string;
 }
 
 export type IEmployeeCreatePayload = Required<

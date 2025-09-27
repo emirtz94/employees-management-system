@@ -19,24 +19,33 @@ export const EmployeesList = () => {
         order: "DESC",
     });
     const [departmentFilter, setDepartmentFilter] = useState<number>();
+    const [employeeSearch, setEmployeeSearch] = useState<string>("");
 
     const navigate = useNavigate();
 
-    const fetchEmployees = async ({ pageNumber, pageSize, orderBy, sort, dept_no }: {
+    const fetchEmployees = async ({ pageNumber, pageSize, orderBy, sort, dept_no, search }: {
         pageNumber: number;
         pageSize: number;
         orderBy?: "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date";
         sort?: "ASC" | "DESC";
-        dept_no?: number
+        dept_no?: number;
+        search?: string;
     }) => {
-        const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort, dept_no });
+        const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort, dept_no, search });
 
         return response.data;
     }
 
     useEffect(() => {
-        fetchEmployees({ pageNumber, pageSize, orderBy: sortConfig.key, sort: sortConfig.order, dept_no: departmentFilter }).then(emp => setEmployees(emp));
-    }, [pageNumber, pageSize, sortConfig, departmentFilter]);
+        fetchEmployees({
+            pageNumber,
+            pageSize,
+            orderBy: sortConfig.key,
+            sort: sortConfig.order,
+            dept_no: departmentFilter,
+            search: employeeSearch.length >= 3 ? employeeSearch : undefined
+        }).then(emp => setEmployees(emp));
+    }, [pageNumber, pageSize, sortConfig, departmentFilter, employeeSearch]);
 
     const createEmployee = () => {
         navigate(`/employees/create`)
@@ -91,7 +100,20 @@ export const EmployeesList = () => {
             <div className="table-responsive shadow-sm rounded bg-white p-3">
                 <h3 className="mb-3">Employees</h3>
 
-                <div>
+                <div className="row">
+                    <div className="col-md-2 mb-3">
+                        <label htmlFor="employeeSearch" className="form-label">
+                            Search Employee
+                        </label>
+                        <input
+                            type="text"
+                            id="employeeSearch"
+                            className="form-control"
+                            placeholder="Search by first or last name"
+                            value={employeeSearch}
+                            onChange={(e) => setEmployeeSearch(e.target.value)}
+                        />
+                    </div>
                     <SelectDepartment
                         label={"Filter by Department"}
                         dept_no={departmentFilter ?? ""}

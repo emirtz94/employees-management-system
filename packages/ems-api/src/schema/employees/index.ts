@@ -16,7 +16,8 @@ export const getListSchema = {
       ],
       default: "emp_no",
     },
-    dept_no: { type: "integer"}
+    dept_no: { type: "integer"},
+    search: { type: "string" }
   },
   required: ["pageNumber", "pageSize"],
   additionalProperties: false,

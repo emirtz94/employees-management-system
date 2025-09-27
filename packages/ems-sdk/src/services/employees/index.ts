@@ -30,7 +30,7 @@ export class EmployeesService extends RestService implements IEmployeesService {
   public async getList(
     query: IEmployeeListQueryParams
   ): Promise<IEmployeeListResponse> {
-    const { pageNumber, pageSize, orderBy, sort, dept_no } = query;
+    const { pageNumber, pageSize, orderBy, sort, dept_no, search } = query;
 
     const params = new URLSearchParams({
       pageNumber: pageNumber.toString(),
@@ -40,6 +40,7 @@ export class EmployeesService extends RestService implements IEmployeesService {
     if (orderBy) params.append("orderBy", orderBy);
     if (sort) params.append("sort", sort);
     if (dept_no) params.append("dept_no", dept_no.toString());
+    if (search) params.append("search", search);
 
     const { data } = await this.axios.get<IEmployeeListResponse>(
       `${this.resource}?${params.toString()}`
@@ -76,7 +77,9 @@ export class EmployeesService extends RestService implements IEmployeesService {
   }
 
   public async delete(id: number): Promise<{ message: string }> {
-    const { data } = await this.axios.delete<{ message: string }>(`${this.resource}/${id}`);
+    const { data } = await this.axios.delete<{ message: string }>(
+      `${this.resource}/${id}`
+    );
     return data;
   }
 }

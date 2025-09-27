@@ -5,7 +5,8 @@ import { Logger } from "pino";
 
 export const getList =
   (pool: Pool, logger: Logger) => async (req: Request, res: Response) => {
-    const { pageSize, pageNumber, orderBy, sort, dept_no } = req.query;
+    const { pageSize, pageNumber, orderBy, sort, dept_no, search } = req.query;
+    
     try {
       const allowedOrderColumns = [
         "emp_no",
@@ -37,10 +38,23 @@ export const getList =
 
       if (dept_no) {
         query += `
-          JOIN dept_emp de ON e.emp_no = de.emp_no
-          WHERE de.dept_no = ? AND de.to_date IS NULL
+          JOIN dept_emp de ON e.emp_no = de.emp_no AND de.dept_no = ? AND de.to_date IS NULL
         `;
         params.push(dept_no);
+      }
+
+      const whereConditions: string[] = [];
+
+      if (search) {
+        whereConditions.push(
+          `(LOWER(e.first_name) LIKE ? OR LOWER(e.last_name) LIKE ?)`
+        );
+        const searchTerm = `%${(search as string).toLowerCase()}%`;
+        params.push(searchTerm, searchTerm);
+      }
+
+      if (whereConditions.length > 0) {
+        query += ` WHERE ` + whereConditions.join(" AND ");
       }
 
       query += ` ORDER BY ${sqlOrderBy} ${sqlSort} LIMIT ? OFFSET ?`;
