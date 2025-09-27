@@ -2,10 +2,10 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "node:path";
 import { Configuration, DefinePlugin } from "webpack";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-export const common: Configuration = {
+export const common = {
   entry: "./src/index.tsx",
   plugins: [
     new HtmlWebpackPlugin({
@@ -15,6 +15,11 @@ export const common: Configuration = {
       "process.env": JSON.stringify(process.env),
     }),
   ],
+  devServer: {
+    hot: true,
+    open: true,
+    historyApiFallback: true,
+  },
   module: {
     rules: [
       {
@@ -26,8 +31,9 @@ export const common: Configuration = {
   },
   resolve: { extensions: [".tsx", ".ts", ".js"] },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    clean: true
-  }
-};
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+    publicPath: "/"
+  },
+} as Configuration;
