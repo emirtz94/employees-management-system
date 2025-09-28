@@ -25,8 +25,9 @@ const createExpressApp = () => {
   app.use(
     cors({
       origin: (origin, callback) => {
-        const allowedOrigins =
-          JSON.parse(process.env.LIST_OF_ALLOWED_ORIGINS as string)
+        const allowedOrigins = JSON.parse(
+          process.env.LIST_OF_ALLOWED_ORIGINS as string
+        );
 
         if (!origin) {
           // i.e Postman request
@@ -49,7 +50,7 @@ const createExpressApp = () => {
   );
   app.use(`/${process.env.VERSION}/managers`, managersRouter(pool, logger));
 
-  app.get("/healthcheck", (req: Request, res: Response) => {
+  app.get("/health", (req: Request, res: Response) => {
     try {
       res
         .status(StatusCodes.OK)
@@ -58,6 +59,17 @@ const createExpressApp = () => {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ message: "Service is down!" });
+    }
+  });
+
+  app.get("/health/db", async (req: Request, res: Response) => {
+    try {
+      // Execute a simple query
+      await pool.query("SELECT 1");
+      res.status(StatusCodes.OK).json({ status: "ok", database: "connected" });
+    } catch (error) {
+      console.error("DB health check failed:", error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ status: "error", database: "disconnected" });
     }
   });
 
