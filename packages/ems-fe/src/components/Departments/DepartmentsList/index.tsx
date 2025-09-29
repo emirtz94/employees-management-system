@@ -5,6 +5,7 @@ import { PageNavigation } from "../../shared/PageNavigation";
 import { IDepartmentList } from "ems-sdk";
 import { useNavigate } from "react-router-dom";
 import { emsSDK, fetchDepartments } from "../../../utils";
+import "./styles.css";
 
 type SortOrder = "ASC" | "DESC" | undefined;
 type OrderBy = "dept_no" | "dept_name" | undefined;
@@ -71,51 +72,53 @@ export const DepartmentsList = () => {
         <div className="position-relative">
             <div className="table-responsive shadow-sm rounded bg-white p-3">
                 <h3 className="mb-3">Departments</h3>
-                <table className="table table-hover table-striped align-middle text-center">
-                    <thead className="table-dark">
-                        <tr>
-                            {[
-                                { key: "dept_name", label: "Department Name" },
-                            ].map(({ key, label }) => (
-                                <th
-                                    key={key}
-                                    role="button"
-                                    onClick={() => handleSort(key as Exclude<OrderBy, undefined>)}
-                                    style={{ cursor: "pointer" }}
-                                >
-                                    {label}{" "}
-                                    {sortConfig.key === key && sortConfig.order === "ASC" && "▲"}
-                                    {sortConfig.key === key && sortConfig.order === "DESC" && "▼"}
-                                </th>
-                            ))}
-                            <th></th> {/* Action column */}
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {departments.map((d) => (
-                            <tr key={d.dept_no}>
-                                <td>{d.dept_name}</td>
-                                <td>
-                                    {/* Three dots dropdown menu */}
-                                    <div className="dropdown">
-                                        <button
-                                            className="btn btn-sm btn-light"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            ⋮
-                                        </button>
-                                        <ActionMenu
-                                            handleOnEdit={() => editDepartment(d.dept_no)}
-                                            handleOnDelete={() => deleteDepartment(d.dept_no)} />
-                                    </div>
-                                </td>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-striped align-middle text-center">
+                        <thead className="table-dark sticky-top">
+                            <tr>
+                                {[
+                                    { key: "dept_name", label: "Department Name" },
+                                ].map(({ key, label }) => (
+                                    <th
+                                        key={key}
+                                        role="button"
+                                        onClick={() => handleSort(key as Exclude<OrderBy, undefined>)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        {label}{" "}
+                                        {sortConfig.key === key && sortConfig.order === "ASC" && "▲"}
+                                        {sortConfig.key === key && sortConfig.order === "DESC" && "▼"}
+                                    </th>
+                                ))}
+                                <th></th> {/* Action column */}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+                            {departments.map((d) => (
+                                <tr key={d.dept_no}>
+                                    <td>{d.dept_name}</td>
+                                    <td>
+                                        {/* Three dots dropdown menu */}
+                                        <div className="dropdown">
+                                            <button
+                                                className="btn btn-sm btn-light"
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
+                                                ⋮
+                                            </button>
+                                            <ActionMenu
+                                                handleOnEdit={() => editDepartment(d.dept_no)}
+                                                handleOnDelete={() => deleteDepartment(d.dept_no)} />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
                 <PageNavigation pageNumber={pageNumber} pageSize={pageSize} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} handlePageSizeChange={handlePageSizeChange} />
             </div>
             <CreateButton label={"Create new employee"} handleOnCreateClick={createDepartment} />

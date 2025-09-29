@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export const SideNavbar = () => {
   return (
-    <nav className="d-flex flex-column vh-100 p-3 bg-dark text-white" style={{ width: "220px" }}>
+    <nav className="d-flex flex-column p-3 bg-dark text-white" style={{ width: "220px" }}>
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item mb-2">
           <NavLink
