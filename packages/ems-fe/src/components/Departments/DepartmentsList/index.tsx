@@ -18,11 +18,22 @@ export const DepartmentsList = () => {
         key: "dept_no",
         order: "DESC",
     });
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [total, setTotal] = useState(0);
 
     const navigate = useNavigate();
-    
+
     useEffect(() => {
-        fetchDepartments({ pageNumber, pageSize, orderBy: sortConfig.key, sort: sortConfig.order }).then(d => setDepartments(d));
+        fetchDepartments({
+            pageNumber,
+            pageSize,
+            orderBy: sortConfig.key,
+            sort: sortConfig.order
+        }).then(({ data, meta }) => {
+            setDepartments(data);
+            setTotalPages(meta.totalPages);
+            setTotal(meta.total);
+        });
     }, [pageNumber, pageSize, sortConfig]);
 
     const createDepartment = () => {
@@ -37,7 +48,11 @@ export const DepartmentsList = () => {
         try {
             await emsSDK.departments.delete(id);
 
-            fetchDepartments({ pageNumber, pageSize }).then(emp => setDepartments(emp));
+            fetchDepartments({ pageNumber, pageSize }).then(({ data, meta }) => {
+                setDepartments(data);
+                setTotalPages(meta.totalPages);
+                setTotal(meta.total);
+            });
         } catch (error) {
             console.log('Failed to delete employee', { error });
         }
@@ -48,8 +63,7 @@ export const DepartmentsList = () => {
     };
 
     const handleNextPage = () => {
-        // just a placeholder, should be totalPages from API
-        setPageNumber(pageNumber + 1);
+        if (pageNumber < totalPages) setPageNumber(pageNumber + 1);
     };
 
     const handlePageSizeChange = (size: number) => {
@@ -119,7 +133,7 @@ export const DepartmentsList = () => {
                         </tbody>
                     </table>
                 </div>
-                <PageNavigation pageNumber={pageNumber} pageSize={pageSize} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} handlePageSizeChange={handlePageSizeChange} />
+                <PageNavigation pageNumber={pageNumber} pageSize={pageSize} total={total} totalPages={totalPages} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} handlePageSizeChange={handlePageSizeChange} />
             </div>
             <CreateButton label={"Create new employee"} handleOnCreateClick={createDepartment} />
         </div>

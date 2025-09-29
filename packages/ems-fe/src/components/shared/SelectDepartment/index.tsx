@@ -15,7 +15,7 @@ export const SelectDepartment: FC<ISelectDepartmentProperties> = ({ label, defau
 
     useEffect(() => {
         // TODO in case we have more than 100 departments then not all of them will be visible
-        fetchDepartments({ pageNumber: 1, pageSize: 100 }).then(response => setDepartments(response))
+        fetchDepartments({ pageNumber: 1, pageSize: 100 }).then(({data}) => setDepartments(data))
     }, []);
 
     return (

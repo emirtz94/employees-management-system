@@ -1,4 +1,4 @@
-import { EmployeeManagementSDK, IDepartmentList, IDepartmentListResponse } from "ems-sdk";
+import { EmployeeManagementSDK, IDepartmentListResponse } from "ems-sdk";
 
 export const emsSDK = new EmployeeManagementSDK(process.env.BASE_URL as string);
 
@@ -13,13 +13,11 @@ export const fetchDepartments = async ({
   pageSize: number;
   orderBy?: "dept_no" | "dept_name";
   sort?: "ASC" | "DESC";
-}): Promise<IDepartmentList[]> => {
-  const response: IDepartmentListResponse = await emsSDK.departments.getList({
+}): Promise<IDepartmentListResponse> => {
+  return await emsSDK.departments.getList({
     pageNumber,
     pageSize,
     orderBy,
     sort,
   });
-
-  return response.data;
 };

@@ -3,12 +3,14 @@ import { FC } from "react"
 interface IPageNavigation {
     pageSize: number;
     pageNumber: number;
+    total: number;
+    totalPages: number;
     handlePrevPage: () => void;
     handleNextPage: () => void;
     handlePageSizeChange: (size: number) => void;
 }
 
-export const PageNavigation: FC<IPageNavigation> = ({ pageNumber, pageSize, handleNextPage, handlePrevPage, handlePageSizeChange }) => {
+export const PageNavigation: FC<IPageNavigation> = ({ pageNumber, pageSize, total, totalPages, handleNextPage, handlePrevPage, handlePageSizeChange }) => {
     return (
         <div className="d-flex justify-content-between align-items-center mt-3 w-100">
             {/* Page size dropdown */}
@@ -36,7 +38,7 @@ export const PageNavigation: FC<IPageNavigation> = ({ pageNumber, pageSize, hand
                 >
                     Previous
                 </button>
-                <span>Page {pageNumber}</span>
+                <span>Page {pageNumber} / {totalPages} (Total: {total})</span>
                 <button
                     className="btn btn-outline-secondary btn-sm ms-2"
                     onClick={handleNextPage}

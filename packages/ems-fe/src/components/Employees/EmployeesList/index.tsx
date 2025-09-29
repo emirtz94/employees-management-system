@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { ActionMenu } from "../../shared/ActionMenu";
 import { useNavigate } from "react-router-dom";
 import { emsSDK } from "../../../utils";
-import { IEmployeeListResponse, IEmployeeList } from "ems-sdk";
+import { IEmployeeList } from "ems-sdk";
 import { CreateButton } from "../../shared/CreateButton";
 import { PageNavigation } from "../../shared/PageNavigation";
 import { SelectDepartment } from "../../shared/SelectDepartment";
@@ -21,6 +21,8 @@ export const EmployeesList = () => {
     });
     const [departmentFilter, setDepartmentFilter] = useState<number>();
     const [employeeSearch, setEmployeeSearch] = useState<string>("");
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [total, setTotal] = useState(0);
 
     const navigate = useNavigate();
 
@@ -32,9 +34,7 @@ export const EmployeesList = () => {
         dept_no?: number;
         search?: string;
     }) => {
-        const response: IEmployeeListResponse = await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort, dept_no, search });
-
-        return response.data;
+        return await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort, dept_no, search });
     }
 
     useEffect(() => {
@@ -45,7 +45,11 @@ export const EmployeesList = () => {
             sort: sortConfig.order,
             dept_no: departmentFilter,
             search: employeeSearch.length >= 3 ? employeeSearch : undefined
-        }).then(emp => setEmployees(emp));
+        }).then(({ data, meta }) => {
+            setEmployees(data);
+            setTotalPages(meta.totalPages);
+            setTotal(meta.total);
+        });
     }, [pageNumber, pageSize, sortConfig, departmentFilter, employeeSearch]);
 
     const createEmployee = () => {
@@ -60,7 +64,11 @@ export const EmployeesList = () => {
         try {
             await emsSDK.employees.delete(id);
 
-            fetchEmployees({ pageNumber, pageSize }).then(emp => setEmployees(emp));
+            fetchEmployees({ pageNumber, pageSize }).then(({ data, meta }) => {
+                setEmployees(data);
+                setTotalPages(meta.total);
+                setTotal(meta.total);
+            });
         } catch (error) {
             console.log('Failed to delete employee', { error });
         }
@@ -71,8 +79,7 @@ export const EmployeesList = () => {
     };
 
     const handleNextPage = () => {
-        // just a placeholder, should be totalPages from API
-        setPageNumber(pageNumber + 1);
+        if (pageNumber < totalPages) setPageNumber(pageNumber + 1);
     };
 
     const handlePageSizeChange = (size: number) => {
@@ -184,7 +191,14 @@ export const EmployeesList = () => {
                         </tbody>
                     </table>
                 </div>
-                <PageNavigation pageNumber={pageNumber} pageSize={pageSize} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} handlePageSizeChange={handlePageSizeChange} />
+                <PageNavigation 
+                    pageNumber={pageNumber} 
+                    pageSize={pageSize} 
+                    total={total} 
+                    totalPages={totalPages} 
+                    handleNextPage={handleNextPage} 
+                    handlePrevPage={handlePrevPage} 
+                    handlePageSizeChange={handlePageSizeChange} />
             </div>
             <CreateButton label={"Create new employee"} handleOnCreateClick={createEmployee} />
         </div>
