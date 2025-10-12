@@ -1,5 +1,15 @@
 import { IManagerModel } from "../model";
 
+export type IManagersList = Pick<
+  IManagerModel,
+  | "emp_no"
+  | "first_name"
+  | "last_name"
+  | "dept_name"
+  | "dept_no"
+  | "from_date"
+  | "to_date"
+>[];
 export interface IManagersListResponse {
   meta: {
     pageNumber: number;
@@ -7,10 +17,10 @@ export interface IManagersListResponse {
     total: number;
     totalPages: number;
   };
-  data: Pick<
-    IManagerModel,
-    "emp_no" | "first_name" | "last_name" | "dept_name"
-  >[];
+  data: IManagersList;
 }
 
-export type IPromoteToManagerResponse = Pick<IManagerModel, 'emp_no' | 'dept_no' | 'from_date'>
+export type IPromoteToManagerResponse = Pick<
+  IManagerModel,
+  "emp_no" | "dept_no" | "from_date"
+>;

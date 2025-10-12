@@ -1,6 +1,7 @@
 export interface IManagersListQueryParams {
   pageNumber: number;
   pageSize: number;
+  dept_no?: number;
 }
 
 export interface IPromoteToManagerPayload {
