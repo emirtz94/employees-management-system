@@ -21,3 +21,34 @@ export const fetchDepartments = async ({
     sort,
   });
 };
+
+export const fetchEmployees = async ({
+  pageNumber,
+  pageSize,
+  orderBy,
+  sort,
+  dept_no,
+  search,
+}: {
+  pageNumber: number;
+  pageSize: number;
+  orderBy?:
+    | "emp_no"
+    | "first_name"
+    | "last_name"
+    | "hire_date"
+    | "gender"
+    | "birth_date";
+  sort?: "ASC" | "DESC";
+  dept_no?: number;
+  search?: string;
+}) => {
+  return await emsSDK.employees.getList({
+    pageNumber,
+    pageSize,
+    orderBy,
+    sort,
+    dept_no,
+    search,
+  });
+};

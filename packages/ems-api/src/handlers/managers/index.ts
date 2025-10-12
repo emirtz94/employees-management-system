@@ -1,4 +1,4 @@
 import { getList } from "./getList";
-import { promoteManager } from "./promoteManager";
+import { create } from "./create";
 
-export { getList, promoteManager };
+export { getList, create };

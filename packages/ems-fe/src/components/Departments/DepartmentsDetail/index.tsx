@@ -3,6 +3,8 @@ import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { emsSDK } from "../../../utils";
 import { DepartmentForm } from "../DepartmentForm";
+import { DepartmentEmployees } from "../DepartmentEmployees";
+import { DepartmentManagers } from "../DepartmentManagers";
 
 const defaultDepartmentPayload: IDepartmentGetByIdResponse = {
     dept_no: 0,
@@ -48,14 +50,32 @@ export const DepartmentsDetail = () => {
     );
 
     return (
-        <div className="container py-4">
-            <div className="shadow-sm rounded bg-white p-4">
-                <h3 className="mb-4">Edit Department</h3>
-                <DepartmentForm 
-                    department={department} 
-                    handleDepartmentChange={handleDepartmentChange}
-                    handleFormSubmit={handleFormSubmit} />
+        <>
+            <div className="container py-4">
+                <div className="shadow-sm rounded bg-white p-4">
+                    <h3 className="mb-4">Edit Department</h3>
+                    <DepartmentForm
+                        department={department}
+                        handleDepartmentChange={handleDepartmentChange}
+                        handleFormSubmit={handleFormSubmit} />
+                </div>
             </div>
-        </div>
+            <div className="container py-4">
+                <div className="shadow-sm rounded bg-white p-4">
+                    <h3 className="mb-4">Department Employees</h3>
+                    {!!department?.dept_no && (
+                        <DepartmentEmployees dept_no={department.dept_no} />
+                    )}
+                </div>
+            </div>
+            <div className="container py-4">
+                <div className="shadow-sm rounded bg-white p-4">
+                    <h3 className="mb-4">Department Managers</h3>
+                    {!!department?.dept_no && (
+                        <DepartmentManagers  dept_no={department.dept_no}/>
+                    )}
+                </div>
+            </div>
+        </>
     );
 }

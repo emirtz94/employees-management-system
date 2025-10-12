@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { ActionMenu } from "../../shared/ActionMenu";
 import { useNavigate } from "react-router-dom";
-import { emsSDK } from "../../../utils";
+import { emsSDK, fetchEmployees } from "../../../utils";
 import { IEmployeeList } from "ems-sdk";
 import { CreateButton } from "../../shared/CreateButton";
 import { PageNavigation } from "../../shared/PageNavigation";
@@ -26,16 +26,6 @@ export const EmployeesList = () => {
 
     const navigate = useNavigate();
 
-    const fetchEmployees = async ({ pageNumber, pageSize, orderBy, sort, dept_no, search }: {
-        pageNumber: number;
-        pageSize: number;
-        orderBy?: "emp_no" | "first_name" | "last_name" | "hire_date" | "gender" | "birth_date";
-        sort?: "ASC" | "DESC";
-        dept_no?: number;
-        search?: string;
-    }) => {
-        return await emsSDK.employees.getList({ pageNumber, pageSize, orderBy, sort, dept_no, search });
-    }
 
     useEffect(() => {
         fetchEmployees({

@@ -1,9 +1,10 @@
 import { IManagersListQueryParams, IPromoteToManagerPayload } from "./request";
-import { IManagersListResponse, IPromoteToManagerResponse } from "./response";
+import { IManagersList, IManagersListResponse, IPromoteToManagerResponse } from "./response";
 
 export {
   IManagersListQueryParams,
   IManagersListResponse,
+  IManagersList,
   IPromoteToManagerPayload,
   IPromoteToManagerResponse
 };
